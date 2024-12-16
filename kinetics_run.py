@@ -9,16 +9,10 @@ from io import BytesIO
 # Streamlit Title
 st.title("Kinetics Data Analysis Interface")
 
-# Upload Instructions
-st.write("""
-**Instructions**:
-1. Upload an Excel file with the following format:
-    - **First row**: Column names (e.g., `time(min)` and `qt(mg/g)`).
-    - **First column**: Time values (`time(min)`).
-    - **Second column**: Adsorption data (`qt(mg/g)`).
-2. Ensure there are no blank rows or formatting errors.
-3. The application will process all sheets in the uploaded file.
-""")
+# Reminder for File Format
+st.info("Reminder: The first row of the uploaded Excel file must contain column headers.\n\n"
+        "Required Columns:\n- **First Column**: 'time(min)'\n- **Second Column**: 'qt(mg/g)'.\n\n"
+        "From the second row onwards, numerical data is required.")
 
 # Define pseudo-first-order and pseudo-second-order models
 def pseudo_first_order(t, q_e, k1):
