@@ -9,6 +9,11 @@ from io import BytesIO
 # Streamlit Title
 st.title("Kinetics Data Analysis Interface")
 
+# Reminder for Data Format
+st.info("Reminder: The first row of the uploaded Excel file contains column headers, "
+        "where the first column must be 'time(min)' and the second column must be 'qt(mg/g)'. "
+        "From the second row onwards, numerical data is required.")
+
 # Define pseudo-first-order and pseudo-second-order models
 def pseudo_first_order(t, q_e, k1):
     return q_e * (1 - np.exp(-k1 * t))
@@ -98,33 +103,4 @@ uploaded_file = st.file_uploader("Upload Excel File (Kinetics Data)", type=["xls
 # Run Analysis
 if uploaded_file:
     st.success("File uploaded successfully.")
-    summary_df, figure_paths, combined_export = run_kinetic_fitting(uploaded_file)
-
-    # Display Results
-    if summary_df is not None and not summary_df.empty:
-        st.write("### Fitting Results")
-        st.dataframe(summary_df)
-
-        # Provide Download for Fitting Results
-        csv_data = summary_df.to_csv(index=False).encode('utf-8')
-        st.download_button(
-            label="📥 Download Fitting Results as CSV",
-            data=csv_data,
-            file_name="kinetic_fitting_results.csv",
-            mime="text/csv"
-        )
-
-        # Provide Download for Combined Original + Fitting Data
-        combined_csv = combined_export.to_csv(index=False).encode('utf-8')
-        st.download_button(
-            label="📥 Download Original and Fitting Data",
-            data=combined_csv,
-            file_name="kinetic_original_and_fitting_data.csv",
-            mime="text/csv"
-        )
-
-    # Display Figures
-    if figure_paths:
-        st.write("### Fitting Figures")
-        for idx, fig_io in enumerate(figure_paths):
-            st.image(fig_io, caption=f"Sheet {idx + 1}", use_container_width=True)
+    summary_df, figure_paths, combined_export = ru
