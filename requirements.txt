@@ -5,4 +5,4 @@ matplotlib
 lmfit
 scipy
 Pillow
-
+openpyxl
